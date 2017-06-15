@@ -91,4 +91,27 @@ class ContentViewController extends Controller
             Location::SORT_ORDER_DESC => 'locationview.details.descending'
         ];
     }
+
+    public function locationsTabAction(ContentView $view)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentInfo = $versionInfo->getContentInfo();
+
+        if ($contentInfo->published) {
+            $locationRepository = $this->getRepository()->getLocationService();
+            $locations = $locationRepository->loadLocations($contentInfo);
+
+            $locationChildren = [];
+            foreach($locations as $location) {
+                $locationChildren[$location->id] = $locationRepository->getLocationChildCount($location);
+            }
+
+            $view->addParameters([
+                'locations' => $locations,
+                'locationChildrenCounts' => $locationChildren
+            ]);
+        }
+
+        return $view;
+    }
 }
