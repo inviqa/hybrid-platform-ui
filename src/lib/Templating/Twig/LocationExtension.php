@@ -43,13 +43,16 @@ class LocationExtension extends Twig_Extension
 
     public function renderLocationPath(Twig_Environment $environment, Location $location)
     {
-        $locationIds = array_filter(explode('/', $location->pathString));
-        array_shift($locationIds);
-        array_pop($locationIds);
+        $path = $location->path;
+
+        /** remove root location from display */
+        array_shift($path);
+        /** last element will be the provided location, no need to retrieve it again */
+        array_pop($path);
 
         $locations = [];
 
-        foreach($locationIds as $locationId) {
+        foreach($path as $locationId) {
             $locations[] = $this->locationService->loadLocation($locationId);
         }
 
