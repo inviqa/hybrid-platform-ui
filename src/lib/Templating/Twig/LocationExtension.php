@@ -34,7 +34,7 @@ class LocationExtension extends Twig_Extension
     {
         return [
             new Twig_SimpleFunction(
-                'ez_location_path',
+                'ez_ui_location_path',
                 [$this, 'renderLocationPath'],
                 ['needs_environment' => true, 'is_safe' => ['html']]
             )
@@ -44,6 +44,7 @@ class LocationExtension extends Twig_Extension
     public function renderLocationPath(Twig_Environment $environment, Location $location)
     {
         $locationIds = array_filter(explode('/', $location->pathString));
+        array_shift($locationIds);
         array_pop($locationIds);
 
         $locations = [];

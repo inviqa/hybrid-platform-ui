@@ -17,7 +17,7 @@
         {% for location in locations %}
         <tr>
             <td></td>
-            <td>{{ ez_location_path(location) }}</td>
+            <td>{{ ez_ui_location_path(location) }}</td>
             <td>{{ locationChildrenCounts[location.id] }}</td>
             <td>
                 {% if location.hidden %}
