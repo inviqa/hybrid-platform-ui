@@ -5,3 +5,13 @@ system:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle::locationview.html.twig"
                     match: true
+            details:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:details.html.twig"
+                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:detailsTab"
+                    match: true
+            locations:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:locations.html.twig"
+                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:locationsTab"
+                    match: true

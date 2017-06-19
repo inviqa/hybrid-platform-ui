@@ -1,0 +1,39 @@
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans({}, 'locationview') }}</h2>
+</div>
+
+<table class="ez-table-data">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'locationview.locations.path'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.locations.subitems'|trans({}, 'locationview') }}</th>
+            <th colspan="2">{{ 'locationview.locations.visibility'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.locations.main'|trans({}, 'locationview') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if locations is defined %}
+        {% for location in locations %}
+        <tr>
+            <td></td>
+            <td>{{ ez_ui_location_path(location.valueObject) }}</td>
+            <td>{{ location.childCount }}</td>
+            <td>
+                {% if location.hidden %}
+                    {{ 'locationview.locations.hidden'|trans({}, 'locationview') }}
+                {% else %}
+                    {% if location.invisible %}
+                        {{ 'locationview.locations.hidden.by.superior'|trans({}, 'locationview') }}
+                    {% else %}
+                        {{ 'locationview.locations.visible'|trans({}, 'locationview') }}
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
