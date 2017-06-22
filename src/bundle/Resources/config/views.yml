@@ -15,3 +15,8 @@ system:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:versions.html.twig"
                     controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:versionsTabAction'
                     match: true
+            translations_tab:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:translations.html.twig"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:translationsTabAction'
+                    match: true
