@@ -76,3 +76,7 @@ services:
     EzSystems\HybridPlatformUi\Repository\DecoratedLocationService:
         arguments:
             - "@ezpublish.api.service.location"
+
+    EzSystems\HybridPlatformUi\Repository\ContentTypeService:
+        arguments:
+            - "@ezpublish.api.service.content_type"
