@@ -8,14 +8,16 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
+use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions;
 
 class ContentViewController extends Controller
 {
@@ -99,16 +101,22 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function locationsTabAction(ContentView $view, UiLocationService $uiLocationService)
-    {
+    public function locationsTabAction(
+        ContentView $view,
+        UiLocationService $uiLocationService,
+        LocationMapper $locationMapper
+    ) {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
         if ($contentInfo->published) {
             $locations = $uiLocationService->loadLocations($contentInfo);
+            $data = $locationMapper->mapToForm($locations, $contentInfo);
+            $actionsForm = $this->createForm(Actions::class, $data);
 
             $view->addParameters([
                 'locations' => $locations,
+                'actionsForm' => $actionsForm->createView(),
             ]);
         }
 

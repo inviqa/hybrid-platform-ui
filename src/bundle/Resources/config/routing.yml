@@ -3,3 +3,8 @@ ez_hybrid_platform_ui_dashboard:
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Dashboard:viewDashboard
     methods: [GET]
+ez_hybrid_platform_ui_content_view_location_actions:
+    path: /location/actions
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:Location:actions
+    methods: [POST]
