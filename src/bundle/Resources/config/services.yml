@@ -86,3 +86,13 @@ services:
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.fields_groups.list"
+
+    EzSystems\HybridPlatformUiBundle\Form\Location\Ordering:
+        arguments: ['@translator']
+        tags: [form.type]
+
+    Symfony\Component\Routing\RouterInterface: '@router'
+
+    eZ\Publish\API\Repository\LocationService: '@ezpublish.api.service.location'
+
+    EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper: ~
