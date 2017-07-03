@@ -51,3 +51,12 @@ services:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
     Symfony\Component\Routing\RouterInterface: '@router'
+
+    eZ\Publish\API\Repository\LocationService: '@ezpublish.api.service.location'
+
+    Twig\Environment: '@twig'
+
+    EzSystems\HybridPlatformUi\Builder\NotificationBuilder:
+        shared: false
+
+    Symfony\Component\Translation\TranslatorInterface: '@translator'

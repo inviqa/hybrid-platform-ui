@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
 namespace EzSystems\HybridPlatformUiBundle\Form\Locations;
 
 use Symfony\Component\Form\AbstractType;
@@ -16,6 +19,15 @@ class Actions extends AbstractType
             ->add('delete', SubmitType::class)
             ->add(
                 'removeLocations',
+                CollectionType::class,
+                [
+                    'entry_type' => CheckboxType::class,
+                    'required' => false,
+                    'allow_add' => true,
+                ]
+            )
+            ->add(
+                'locationVisibility',
                 CollectionType::class,
                 [
                     'entry_type' => CheckboxType::class,

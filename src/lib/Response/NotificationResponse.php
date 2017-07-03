@@ -1,18 +1,38 @@
 <?php
-
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
 namespace EzSystems\HybridPlatformUi\Response;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Custom response type for notifications to facilitate type checking when needed.
+ */
 class NotificationResponse extends Response
 {
-    public static function success()
+    /**
+     * Successful response.
+     *
+     * @param string $content
+     *
+     * @return static
+     */
+    public static function success(string $content)
     {
-        return static::create('');
+        return new static($content);
     }
 
-    public static function error()
+    /**
+     * Error response.
+     *
+     * @param string $content
+     *
+     * @return static
+     */
+    public static function error(string $content)
     {
-        return static::create('');
+        return new static($content, static::HTTP_BAD_REQUEST);
     }
 }

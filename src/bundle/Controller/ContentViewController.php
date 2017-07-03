@@ -122,10 +122,12 @@ class ContentViewController extends Controller
         if ($contentInfo->published) {
             $locations = $uiLocationService->loadLocations($contentInfo);
             $actionsForm = $formFactory->createLocationsActionForm($locations);
+            $visibilityForm = $formFactory->createLocationsVisibilityForm();
 
             $view->addParameters([
                 'locations' => $locations,
                 'actionsForm' => $actionsForm->createView(),
+                'visibilityForm' => $visibilityForm->createView(),
             ]);
         }
 
