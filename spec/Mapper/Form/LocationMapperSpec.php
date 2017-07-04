@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
 namespace spec\EzSystems\HybridPlatformUi\Mapper\Form;
 
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -13,13 +17,41 @@ class LocationMapperSpec extends ObjectBehavior
         $secondLocationId = 2;
 
         $locations = [
-            new Location(['id' => $firstLocationId]),
-            new Location(['id' => $secondLocationId]),
+            new Location(['id' => $firstLocationId, 'hidden' => false]),
+            new Location(['id' => $secondLocationId, 'hidden' => false]),
         ];
 
         $expectedData = [
             'removeLocations' => [
                 $firstLocationId => false,
+                $secondLocationId => false,
+            ],
+            'locationVisibility' => [
+                $firstLocationId => true,
+                $secondLocationId => true,
+            ],
+        ];
+
+        $this->mapToForm($locations)->shouldBeLike($expectedData);
+    }
+
+    function it_should_map_location_visibility_to_form()
+    {
+        $firstLocationId = 1;
+        $secondLocationId = 2;
+
+        $locations = [
+            new Location(['id' => $firstLocationId, 'hidden' => false]),
+            new Location(['id' => $secondLocationId, 'hidden' => true]),
+        ];
+
+        $expectedData = [
+            'removeLocations' => [
+                $firstLocationId => false,
+                $secondLocationId => false,
+            ],
+            'locationVisibility' => [
+                $firstLocationId => true,
                 $secondLocationId => false,
             ],
         ];

@@ -25,6 +25,15 @@ class Actions extends AbstractType
                     'required' => false,
                     'allow_add' => true,
                 ]
+            )
+            ->add(
+                'locationVisibility',
+                CollectionType::class,
+                [
+                    'entry_type' => CheckboxType::class,
+                    'required' => false,
+                    'allow_add' => true,
+                ]
             );
     }
 }
