@@ -75,6 +75,18 @@ class UiLocationService
         }
     }
 
+    /**
+     * Creates location.
+     *
+     * @param ContentInfo $contentInfo
+     * @param $locationId
+     */
+    public function addLocation(ContentInfo $contentInfo, $locationId)
+    {
+        $locationCreateStruct = $this->locationService->newLocationCreateStruct($locationId);
+        $this->locationService->createLocation($contentInfo, $locationCreateStruct);
+    }
+
     private function buildUiLocations(array $locations)
     {
         return array_map(

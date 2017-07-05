@@ -56,6 +56,13 @@ class LocationController extends Controller
             if ($actionsForm->get('delete')->isClicked()) {
                 $uiLocationService->deleteLocations($locationIds);
             }
+
+            if ($actionsForm->get('add')->isClicked()) {
+                $uiLocationService->addLocation(
+                    $content->contentInfo,
+                    $actionsForm->get('parentLocationId')->getData()
+                );
+            }
         }
 
         return new RedirectResponse(
