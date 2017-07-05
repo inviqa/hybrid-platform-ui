@@ -49,3 +49,7 @@ services:
 
     EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
+
+    EzSystems\HybridPlatformUi\Form\Extension\SubmitTypeIconExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\SubmitType }

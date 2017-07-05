@@ -46,7 +46,11 @@
     <p>
         {{ 'locationview.locations.swap.with.another'|trans()|desc('Swap the content item at this location with another') }}
 
-        {{ form_widget(swapLocationsForm.swap, {'label': 'locationview.locations.select.content.item'|trans()|desc('Select content item'), 'attr': {'class': 'ez-button ez-button-primary'}}) }}
+        {{ form_widget(swapLocationsForm.swap, {
+            'label': 'locationview.locations.select.content.item'|trans()|desc('Select content item'),
+            'attr': {'class': 'ez-button ez-button-primary'},
+            'icon': 'ez-icon-relations',
+        }) }}
     </p>
     {{ form_end(swapLocationsForm) }}
 </div>
