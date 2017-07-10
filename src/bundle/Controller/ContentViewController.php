@@ -16,6 +16,7 @@ use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiRelationService;
+use EzSystems\HybridPlatformUi\Repository\UiSectionService;
 
 class ContentViewController extends TabController
 {
@@ -48,16 +49,13 @@ class ContentViewController extends TabController
         return $view;
     }
 
-    public function detailsTabAction(ContentView $view)
+    public function detailsTabAction(ContentView $view, UiSectionService $sectionService)
     {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
-        $sectionService = $this->getRepository()->getSectionService();
-        $section = $sectionService->loadSection($contentInfo->sectionId);
-
         $view->addParameters([
-            'section' => $section,
+            'section' => $sectionService->loadSection($contentInfo->sectionId),
             'contentInfo' => $contentInfo,
             'versionInfo' => $versionInfo,
             'creator' => $this->loadUser($contentInfo->ownerId),
