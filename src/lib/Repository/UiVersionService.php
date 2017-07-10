@@ -6,6 +6,7 @@
 namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 
 /**
  * Service for allowing deletion of versions.
@@ -30,11 +31,38 @@ class UiVersionService
      */
     public function deleteVersion(int $contentId, int $versionNo)
     {
-        $versionInfo = $this->contentService->loadVersionInfo(
-            $this->contentService->loadContentInfo($contentId),
+        $versionInfo = $this->loadVersionInfo(
+            $this->loadContentInfo($contentId),
             $versionNo
         );
 
         $this->contentService->deleteVersion($versionInfo);
+    }
+
+    /**
+     * Creates a new draft based on the content and verisionNo.
+     *
+     * @param $contentId
+     * @param $versionNo
+     */
+    public function createDraft($contentId, $versionNo)
+    {
+        $contentInfo = $this->loadContentInfo($contentId);
+        $versionInfo = $this->loadVersionInfo(
+            $this->loadContentInfo($contentId),
+            $versionNo
+        );
+
+        $this->contentService->createContentDraft($contentInfo, $versionInfo);
+    }
+
+    private function loadContentInfo($contentId)
+    {
+        return $this->contentService->loadContentInfo($contentId);
+    }
+
+    private function loadVersionInfo(ContentInfo $contentInfo, $versionNo)
+    {
+        return $this->contentService->loadVersionInfo($contentInfo, $versionNo);
     }
 }
