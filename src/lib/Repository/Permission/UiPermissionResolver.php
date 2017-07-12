@@ -19,6 +19,7 @@ class UiPermissionResolver
     const REVERSE_RELATION = 'reverserelatedlist';
     const MANAGE_LOCATIONS = 'manage_locations';
     const REMOVE = 'remove';
+    const READ_VERSION = 'versionread';
 
     /**
      * @var PermissionResolver
@@ -68,5 +69,17 @@ class UiPermissionResolver
         return $this->permissionResolver->canUser(
             self::CONTENT_MODULE, self::REMOVE, $contentInfo, [$targetLocation]
         );
+    }
+
+    /**
+     * Checks if the current user can read the version.
+     *
+     * @param ContentInfo $contentInfo
+     *
+     * @return bool
+     */
+    public function canReadVersion(ContentInfo $contentInfo)
+    {
+        return $this->permissionResolver->canUser(self::CONTENT_MODULE, self::READ_VERSION, $contentInfo);
     }
 }

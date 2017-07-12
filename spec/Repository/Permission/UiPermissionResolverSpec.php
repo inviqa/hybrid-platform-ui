@@ -54,7 +54,7 @@ class UiPermissionResolverSpec extends ObjectBehavior
     ) {
         $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::REMOVE, $contentInfo, [$location])->willReturn(true);
 
-        $this->canRemoveContent($contentInfo)->shouldBe(true);
+        $this->canRemoveContent($contentInfo, $location)->shouldBe(true);
     }
 
     function it_checks_user_cannot_remove_content(
@@ -64,6 +64,20 @@ class UiPermissionResolverSpec extends ObjectBehavior
     ) {
         $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::REMOVE, $contentInfo, [$location])->willReturn(false);
 
-        $this->canRemoveContent($contentInfo)->shouldBe(false);
+        $this->canRemoveContent($contentInfo, $location)->shouldBe(false);
+    }
+
+    function it_checks_user_can_read_version(PermissionResolver $permissionResolver, ContentInfo $contentInfo)
+    {
+        $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::READ_VERSION, $contentInfo)->willReturn(true);
+
+        $this->canReadVersion($contentInfo)->shouldBe(true);
+    }
+
+    function it_checks_user_cannot_read_version(PermissionResolver $permissionResolver, ContentInfo $contentInfo)
+    {
+        $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::READ_VERSION, $contentInfo)->willReturn(false);
+
+        $this->canReadVersion($contentInfo)->shouldBe(false);
     }
 }
