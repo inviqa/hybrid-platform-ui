@@ -12,6 +12,7 @@ use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\Visibility;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -110,5 +111,10 @@ class UiFormFactory
             $this->orderingMapper->mapToForm($location),
             ['current_sort_field' => $location->sortField]
         );
+    }
+
+    public function createLocationVisibilityForm()
+    {
+        return $this->formFactory->create(Visibility::class);
     }
 }
