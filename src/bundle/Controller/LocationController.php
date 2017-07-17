@@ -18,6 +18,7 @@ use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class LocationController extends TabController
 {
@@ -52,11 +53,13 @@ class LocationController extends TabController
             $locations = $this->uiLocationService->loadLocations($contentInfo);
             $actionsForm = $this->formFactory->createLocationsActionForm($locations);
             $swapLocationsForm = $this->formFactory->createLocationsContentSwapForm();
+            $visibilityForm = $this->formFactory->createLocationVisibilityForm();
 
             $view->addParameters([
                 'locations' => $locations,
                 'actionsForm' => $actionsForm->createView(),
                 'swapLocationsForm' => $swapLocationsForm->createView(),
+                'visibilityForm' => $visibilityForm->createView(),
             ]);
         }
 
@@ -120,6 +123,55 @@ class LocationController extends TabController
         }
 
         return $this->reloadTab('details', $content->id, $location->id);
+    }
+
+    public function visibilityAction(
+        Request $request,
+        LocationService $locationService,
+        UiFormFactory $formFactory,
+        TranslatorInterface $translator
+    ) {
+        try {
+            $visibilityForm = $formFactory->createLocationVisibilityForm();
+            $visibilityForm->handleRequest($request);
+
+            if (!$visibilityForm->isValid()) {
+                /** @Desc("Invalid form submission.") */
+                $message = $translator->trans(
+                    'locationview.locations.notification.invalid.form', [], 'locationview'
+                );
+
+                return;
+            }
+
+            $visibility = $visibilityForm->get('visibility')->getData();
+            $locationId = $visibilityForm->get('locationId')->getData();
+
+            $location = $locationService->loadLocation($locationId);
+
+            if ($visibility) {
+                $locationService->unhideLocation($location);
+                /** @Desc("The Location #%id% is now visible") */
+                $message = $translator->trans(
+                    'locationview.locations.notification.visible', ['%id%' => $location->id], 'locationview'
+                );
+
+                return;
+            }
+
+            $locationService->hideLocation($location);
+            /** @Desc("The Location #%id% is now hidden") */
+            $message = $translator->trans(
+                'locationview.locations.notification.hidden', ['%id%' => $location->id], 'locationview'
+            );
+
+            return;
+        } catch (\Exception $e) {
+            /** @Desc("Error updating location visibility") */
+            $message = $translator->trans('locationview.locations.visibility.error', [], 'locationview');
+
+            return;
+        }
     }
 
     /**
